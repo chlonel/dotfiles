@@ -4,6 +4,14 @@
 {{- $secret_key_path := joinPath .chezmoi.homeDir ".config" "chezmoi" "age_secret_key" -}}
 {{- $public_key := $secret_key_path | include | replaceAllRegex "(.|\n)*public key: (.+)(.|\n)*" "$2" -}}
 
+{{- $osid := .chezmoi.os -}}
+{{- if hasKey .chezmoi.osRelease "id" -}}
+{{-   $osid = printf "%s-%s" $osid .chezmoi.osRelease.id -}}
+{{- end -}}
+{{- if hasKey .chezmoi.osRelease "idLike" -}}
+{{-   $osid = printf "%s-%s" $osid .chezmoi.osRelease.idLike -}}
+{{- end -}}
+
 {{- $usage := "" -}}
 {{- $usage_number := promptIntOnce . "usege_number" "Select your usage.\n1: Private\n2: Work\n" 0 -}}
 {{- if eq $usage_number 1 -}}
@@ -23,4 +31,5 @@ encryption = "age"
     command = "code"
     args = ["--wait"]
 [data]
+    osid = {{ $osid | quote }}
     usage = {{ $usage | quote }}
