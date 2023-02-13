@@ -1,0 +1,5 @@
+{{- $filePath := joinPath "environments" "private" .chezmoi.sourceFile -}}
+
+{{- if stat $filePath -}}
+{{-   $filePath | include | decrypt -}}
+{{- end -}}

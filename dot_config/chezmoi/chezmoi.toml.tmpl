@@ -1,0 +1,23 @@
+{{- $age_secret_key_path := joinPath .chezmoi.homeDir ".config" "chezmoi" "age_secret_key" -}}
+{{- $age_public_key := $age_secret_key_path | include | replaceAllRegex "(.|\n)*public key: (.+)(.|\n)*" "$2" -}}
+
+{{- $usage := "" -}}
+{{- $usage_number := promptIntOnce . "usege_number" "Select your usage.\n1: Private\n2: Work" 0 -}}
+{{- if eq $usage_number 1 -}}
+{{-   $usage := "private" -}}
+{{- else if eq $usage_number 2 -}}
+{{-   $usage := "work" -}}
+{{- else -}}
+{{-   writeToStdout "Invalid number." -}}
+{{-   exit 1 -}}
+{{- end -}}
+
+encryption = "age"
+[age]
+    identity = {{ $age_secret_key_path | quote }}
+    recipient = {{ $age_public_key | quote }}
+[edit]
+    command = "code"
+    args = ["--wait"]
+[data]
+    usage = {{ $usage | quote }}
