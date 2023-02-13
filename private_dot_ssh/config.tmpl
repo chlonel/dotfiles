@@ -1,0 +1,5 @@
+{{- $filePath := joinPath "environments" .usage "private_dot_ssh/encrypted_config.age" -}}
+
+{{- if stat $filePath -}}
+{{-   $filePath | include | decrypt -}}
+{{- end -}}

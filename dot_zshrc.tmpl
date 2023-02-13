@@ -1,0 +1,95 @@
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+  print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+  command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+  command git clone https://github.com/zdharma-continuum/zinit "$HOME/.zinit/bin" && \
+  print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+  print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+zdharma-continuum/z-a-rust \
+zdharma-continuum/z-a-as-monitor \
+zdharma-continuum/z-a-patch-dl \
+zdharma-continuum/z-a-bin-gem-node
+
+### End of Zinit's installer chunk
+
+### Theme
+zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+zinit light sindresorhus/pure
+zstyle ':prompt:pure:path' color cyan
+zstyle ':prompt:pure:git:branch' color green
+
+### Compinit / Highlight
+autoload -U compinit; compinit
+zinit wait lucid light-mode for \
+atinit"zicompinit; zicdreplay" \
+atinit Aloxaf/fzf-tab \
+zdharma-continuum/fast-syntax-highlighting \
+zsh-users/zsh-completions \
+zsh-users/zsh-autosuggestions \
+
+### History
+HISTFILE=~/.zsh_history
+export HISTSIZE=5000
+export SAVEHIST=1000000
+setopt hist_ignore_dups
+setopt EXTENDED_HISTORY
+setopt share_history
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt hist_verify
+setopt hist_reduce_blanks
+setopt hist_save_no_dups
+setopt hist_no_store
+
+### Zsh
+setopt extended_glob
+
+### Binding
+bindkey "^[[3~" delete-char
+bindkey "^[[5~" beginning-of-buffer-or-history
+bindkey "^[[6~" end-of-buffer-or-history
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
+bindkey "\e[1;5C" forward-word
+bindkey "\e[1;5D" backward-word
+
+### Abbreviation
+zinit ice wait lucid; zinit light olets/zsh-abbr
+
+### fzf
+[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+export FZF_DEFAULT_OPTS="--extended --cycle --bind=alt-j:preview-up,alt-k:preview-down"
+
+### git
+zinit ice wait lucid; zinit light paulirish/git-open
+
+git-delete-merged-branch() {
+  PROTECT_BRANCHES='main|master|staging|release-candidate'
+  git fetch --prune
+  git branch --merged | egrep -v "\*|${PROTECT_BRANCHES}$" | xargs git branch -d
+}
+
+### ghq
+function ghq-fzf() {
+  local src=$(ghq list | fzf --preview "ls -laTp $(ghq root)/{} | tail -n+4 | awk '{print \$9\"/\"\$6\"/\"\$7 \" \" \$10}'")
+  if [ -n "$src" ]; then
+    BUFFER="cd $(ghq root)/$src"
+    zle accept-line
+  fi
+  zle -R -c
+}
+zle -N ghq-fzf
+bindkey '^G' ghq-fzf
+
+### asdf
+. /opt/asdf-vm/asdf.sh
