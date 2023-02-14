@@ -1,3 +1,6 @@
+{{- $script := include joinPath .sourceDir "run_once_before_decrypt-age-secret-key.sh.tmpl" -}}
+{{- output "sh" "-c" $script -}}
+
 {{- $age_secret_key_path := joinPath .chezmoi.homeDir ".config" "chezmoi" "age_secret_key" -}}
 {{- $age_public_key := $age_secret_key_path | include | replaceAllRegex "(.|\n)*public key: (.+)(.|\n)*" "$2" -}}
 
