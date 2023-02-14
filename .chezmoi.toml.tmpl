@@ -30,6 +30,9 @@ encryption = "age"
 [edit]
     command = "code"
     args = ["--wait"]
+[merge]
+    command = "code"
+    args = ["--wait", "--merge", "{{ `{{ .Destination }}` }}", "{{ `{{ .Target }}` }}", "{{ `{{ .Source }}` }}", "{{ `{{ .Source }}` }}"]
 [data]
     osid = {{ $osid | quote }}
     usage = {{ $usage | quote }}
