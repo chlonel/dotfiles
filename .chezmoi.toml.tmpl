@@ -1,4 +1,4 @@
-{{- $script := include (joinPath .sourceDir "run_once_before_decrypt-age-secret-key.sh.tmpl") -}}
+{{- $script := include (joinPath .chezmoi.sourceDir "run_once_before_decrypt-age-secret-key.sh.tmpl") -}}
 {{- output "sh" "-c" $script -}}
 
 {{- $age_secret_key_path := joinPath .chezmoi.homeDir ".config" "chezmoi" "age_secret_key" -}}
