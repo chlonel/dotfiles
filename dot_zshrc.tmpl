@@ -66,8 +66,12 @@ bindkey "\e[1;5D" backward-word
 zinit ice wait lucid; zinit light olets/zsh-abbr
 
 ### fzf
+{{- if contains "arch" .osid }}
 [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+{{- else if contains "darwin" .osid }}
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+{{- end }}
 export FZF_DEFAULT_OPTS="--extended --cycle --bind=alt-j:preview-up,alt-k:preview-down"
 
 ### git
@@ -92,4 +96,8 @@ zle -N ghq-fzf
 bindkey '^G' ghq-fzf
 
 ### asdf
+{{- if contains "arch" .osid }}
 . /opt/asdf-vm/asdf.sh
+{{- else if contains "darwin" .osid }}
+. $(brew --prefix asdf)/libexec/asdf.sh
+{{- end }}

@@ -1,3 +1,8 @@
 age_secret_key.age
 /environments/
 /setup/
+{{ "" }}
+
+{{- if not (contains "darwin" .osid) }}
+dot_config/private_karabiner
+{{- end }}
