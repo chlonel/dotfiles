@@ -95,6 +95,12 @@ function ghq-fzf() {
 zle -N ghq-fzf
 bindkey '^G' ghq-fzf
 
+{{- if contains "darwin" .osid }}
+{{ "" }}
+### Homebrew
+FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+{{- end }}
+
 ### asdf
 {{- if contains "arch" .osid }}
 . /opt/asdf-vm/asdf.sh
