@@ -60,7 +60,10 @@ bindkey "^[[6~" end-of-buffer-or-history
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
 bindkey "\e[1;5C" forward-word
+bindkey "^[[1;3C" forward-word
 bindkey "\e[1;5D" backward-word
+bindkey "^[[1;3D" backward-word
+bindkey "^[[3;3~" kill-word
 
 ### Abbreviation
 zinit ice wait lucid; zinit light olets/zsh-abbr
@@ -106,4 +109,11 @@ FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 . /opt/asdf-vm/asdf.sh
 {{- else if contains "darwin" .osid }}
 . $(brew --prefix asdf)/libexec/asdf.sh
+{{- end }}
+
+{{- if contains "darwin" .osid }}
+{{ "" }}
+### Mobile Dev Library
+export PATH=$PATH:~/Library/Android/sdk/platform-tools
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 {{- end }}
