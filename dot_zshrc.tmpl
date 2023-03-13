@@ -30,11 +30,11 @@ zstyle ':prompt:pure:git:branch' color green
 ### Compinit / Highlight
 autoload -U compinit; compinit
 zinit wait lucid light-mode for \
-atinit"zicompinit; zicdreplay" \
-atinit Aloxaf/fzf-tab \
-zdharma-continuum/fast-syntax-highlighting \
-zsh-users/zsh-completions \
-zsh-users/zsh-autosuggestions \
+  atinit"zicompinit; zicdreplay" \
+  atinit Aloxaf/fzf-tab \
+  zdharma-continuum/fast-syntax-highlighting \
+  zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
 
 ### History
 HISTFILE=~/.zsh_history
