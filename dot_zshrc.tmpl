@@ -21,20 +21,12 @@ zdharma-continuum/z-a-bin-gem-node
 
 ### End of Zinit's installer chunk
 
+### Zsh Settings
 ### Theme
 zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
 zinit light sindresorhus/pure
 zstyle ':prompt:pure:path' color cyan
 zstyle ':prompt:pure:git:branch' color green
-
-### Compinit / Highlight
-autoload -U compinit; compinit
-zinit wait lucid light-mode for \
-  atinit"zicompinit; zicdreplay" \
-  atinit Aloxaf/fzf-tab \
-  zdharma-continuum/fast-syntax-highlighting \
-  zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
 
 ### History
 HISTFILE=~/.zsh_history
@@ -50,9 +42,6 @@ setopt hist_reduce_blanks
 setopt hist_save_no_dups
 setopt hist_no_store
 
-### Zsh
-setopt extended_glob
-
 ### Binding
 bindkey "^[[3~" delete-char
 bindkey "^[[5~" beginning-of-buffer-or-history
@@ -65,8 +54,22 @@ bindkey "\e[1;5D" backward-word
 bindkey "^[[1;3D" backward-word
 bindkey "^[[3;3~" kill-word
 
+### Compinit / Highlight
+autoload -U compinit; compinit
+zinit wait lucid light-mode for \
+  atinit"zicompinit; zicdreplay" \
+  atinit Aloxaf/fzf-tab \
+  zdharma-continuum/fast-syntax-highlighting \
+  zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+
 ### Abbreviation
 zinit ice wait lucid; zinit light olets/zsh-abbr
+
+### Common
+setopt extended_glob
+
+### End of Zsh Settings
 
 ### fzf
 {{- if contains "arch" .osid }}
