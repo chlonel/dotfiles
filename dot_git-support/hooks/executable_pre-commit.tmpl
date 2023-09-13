@@ -1,0 +1,5 @@
+{{- $filePath := joinPath "environments" .usage "dot_git-support/hooks/pre-commit" -}}
+
+{{- if stat $filePath -}}
+{{-   $filePath | include -}}
+{{- end -}}
