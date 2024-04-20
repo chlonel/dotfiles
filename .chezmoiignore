@@ -6,4 +6,5 @@ age_secret_key.age
 
 {{- if not (contains "darwin" .osid) }}
 .config/karabiner
+Library
 {{- end }}

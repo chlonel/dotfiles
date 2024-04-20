@@ -1,4 +1,3 @@
-{{- if contains "darwin" .osid }}
 /*
 PUT THIS FILE IN ~/Library/KeyBindings/DefaultKeyBinding.dict
 This file remaps the key bindings of a single user on Mac OS X 10.5 to more closely
@@ -67,4 +66,3 @@ which is completely different.
   "@\U007F"  = "deleteWordBackward:";                          /* Cmd   + Backspace        */
   "$\U000A"  = "insertLineBreak:";                             /* Shift + Return           */
 }
-{{- end }}
