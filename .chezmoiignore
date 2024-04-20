@@ -5,5 +5,5 @@ age_secret_key.age
 {{ "" }}
 
 {{- if not (contains "darwin" .osid) }}
-dot_config/private_karabiner
+.config/karabiner
 {{- end }}
