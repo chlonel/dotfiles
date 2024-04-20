@@ -54,6 +54,9 @@ bindkey "\e[1;5D" backward-word
 bindkey "^[[1;3D" backward-word
 bindkey "^[[3;3~" kill-word
 
+### Common
+setopt extended_glob
+
 ### Compinit / Highlight
 autoload -U compinit; compinit
 zinit wait lucid light-mode for \
@@ -68,9 +71,6 @@ zinit ice wait lucid; zinit light olets/zsh-abbr
 
 ### JS / TS
 zinit ice wait lucid; zinit light azu/ni.zsh
-
-### Common
-setopt extended_glob
 
 ### End of Zsh Settings
 
