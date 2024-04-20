@@ -102,12 +102,8 @@ bindkey '^G' ghq-fzf
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 {{- end }}
 
-### asdf
-{{- if contains "arch" .osid }}
-. /opt/asdf-vm/asdf.sh
-{{- else if contains "darwin" .osid }}
-. $(brew --prefix asdf)/libexec/asdf.sh
-{{- end }}
+### mise
+eval "$(mise activate zsh)"
 
 {{- if contains "darwin" .osid }}
 {{ "" }}
